@@ -205,9 +205,9 @@ public:
 	TCHAR const*GetString()
 	{
 		if(!IsString()) return _T("");
-		TCHAR const*t = Edif::ConvertString(current->u.string.ptr);
+		TCHAR *t = Edif::ConvertString(current->u.string.ptr);
 		TCHAR *c = Runtime.CopyString(t);
-		Edif::FreeString(c);
+		Edif::FreeString(t);
 		return c;
 	}
 	int GetInteger()

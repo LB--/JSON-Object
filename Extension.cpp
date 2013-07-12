@@ -49,12 +49,13 @@ Extension::Extension(RD *rd, SerializedED *SED, createObjectInfo *COB) : rd(rd),
 	LinkCondition(8, IsTrue);
 
 	LinkExpression(0, GetError);
-	LinkExpression(1, GetInteger);
-	LinkExpression(2, GetLong);
-	LinkExpression(3, GetFloat);
-	LinkExpression(4, GetDouble);
-	LinkExpression(5, GetNumValues);
-	LinkExpression(6, GetBoolNum);
+	LinkExpression(1, GetString);
+	LinkExpression(2, GetInteger);
+	LinkExpression(3, GetLong);
+	LinkExpression(4, GetFloat);
+	LinkExpression(5, GetDouble);
+	LinkExpression(6, GetNumValues);
+	LinkExpression(7, GetBoolNum);
 
 	current = root = json_parse("null", 4);
 }

@@ -45,12 +45,12 @@
 		"Separator",
 		[0, "Get Error"],
 		[1, "Get String"],
-		[1, "Get Integer"],
-		[1, "Get Long (64-bit as string)"],
-		[1, "Get Float"],
-		[1, "Get Double (64-bit as string)"],
-		[1, "Get Number of Values"],
-		[1, "Get Boolean (1|0)"],
+		[2, "Get Integer"],
+		[3, "Get Long (64-bit as string)"],
+		[4, "Get Float"],
+		[5, "Get Double (64-bit as string)"],
+		[6, "Get Number of Values"],
+		[7, "Get Boolean (1|0)"],
 		"Separator"
 	],
 
