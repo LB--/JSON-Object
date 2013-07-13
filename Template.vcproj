@@ -1351,6 +1351,18 @@
 				Name="The Extension Class"
 				>
 				<File
+					RelativePath=".\Actions.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Conditions.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Expressions.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\Extension.cpp"
 					>
 					<FileConfiguration

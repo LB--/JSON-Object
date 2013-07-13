@@ -94,167 +94,32 @@ public:
 #endif
 
 	//Actions
-	void LoadJSON(TCHAR const*JSON, int flags)
-	{
-		json_settings settings = {0};
-		settings.settings = (flags ? json_relaxed_commas : 0);
-		char Error[128];
-#ifdef UNICODE
-		std::string json = UTF8fromUnicode(JSON);
-		if(json.empty())
-		{
-			error = L"Could not convert Unicode JSON to UTF8";
-			Runtime.GenerateEvent(0);
-			error.clear();
-			return;
-		}
-		json_value *temp = json_parse_ex(&settings, json.c_str(), json.length(), Error);
-#else
-		json_value *temp = json_parse_ex(&settings, JSON, strlen(JSON), Error);
-#endif
-		if(!temp)
-		{
-			TCHAR *t = 0;
-			error = (t = Edif::ConvertString(Error));
-			Edif::FreeString(t), t = 0;
-			Runtime.GenerateEvent(0);
-			error.clear();
-			return;
-		}
-		if(root)
-		{
-			current = 0;
-			json_value_free(root);
-		}
-		current = root = temp;
-	}
-	void EnterObject(TCHAR const*Name)
-	{
-		if(IsObject())
-		{
-			json_value const*temp = &((*current)[UTF8fromUnicode(Name).c_str()]);
-			if(temp)
-			{
-				current = temp;
-			}
-		}
-	}
-	void EnterArray(unsigned index)
-	{
-		if(IsArray())
-		{
-			json_value const*temp = &((*current)[index]);
-			if(temp)
-			{
-				current = temp;
-			}
-		}
-	}
-	void GoUp()
-	{
-		current = current->parent ? current->parent : current;
-	}
-	void GotoRoot()
-	{
-		current = root;
-	}
+	void LoadJSON(TCHAR const *JSON, int flags);
+	void EnterObject(TCHAR const *Name);
+	void EnterArray(unsigned index);
+	void GoUp();
+	void GotoRoot();
 
 	//Conditions
-	bool OnError() //0
-	{
-		return true;
-	}
-	bool IsString()
-	{
-		return current->type == json_string;
-	}
-	bool IsInteger()
-	{
-		return current->type == json_integer;
-	}
-	bool IsDouble()
-	{
-		return current->type == json_double;
-	}
-	bool IsObject()
-	{
-		return current->type == json_object;
-	}
-	bool IsArray()
-	{
-		return current->type == json_array;
-	}
-	bool IsBoolean()
-	{
-		return current->type == json_boolean;
-	}
-	bool IsNull()
-	{
-		return current->type == json_null;
-	}
-	bool IsTrue()
-	{
-		return IsBoolean() && current->u.boolean;
-	}
+	bool OnError(); //0
+	bool IsString();
+	bool IsInteger();
+	bool IsDouble();
+	bool IsObject();
+	bool IsArray();
+	bool IsBoolean();
+	bool IsNull();
+	bool IsTrue();
 
 	//Expressions
-	TCHAR const*GetError()
-	{
-		return Runtime.CopyString(error.c_str());
-	}
-	TCHAR const*GetString()
-	{
-		if(!IsString()) return _T("");
-		TCHAR *t = Edif::ConvertString(current->u.string.ptr);
-		TCHAR *c = Runtime.CopyString(t);
-		Edif::FreeString(t);
-		return c;
-	}
-	int GetInteger()
-	{
-		return IsInteger() ? static_cast<int>(current->u.integer) : 0;
-	}
-	TCHAR const*GetLong()
-	{
-		if(IsInteger())
-		{
-			std::basic_ostringstream<TCHAR> ss;
-			ss << current->u.integer;
-			return Runtime.CopyString(ss.str().c_str());
-		}
-		return _T("0");
-	}
-	float GetFloat()
-	{
-		return IsDouble() ? static_cast<float>(current->u.dbl) : 0.0f;
-	}
-	TCHAR const*GetDouble()
-	{
-		if(IsDouble())
-		{
-			std::basic_ostringstream<TCHAR> ss;
-			ss << std::setprecision(20) << current->u.dbl;
-			return Runtime.CopyString(ss.str().c_str());
-		}
-		return _T("0.0");
-	}
-	unsigned GetNumValues()
-	{
-		if(IsObject())
-		{
-			return current->u.object.length;
-		}
-		else if(IsArray())
-		{
-			return current->u.array.length;
-		}
-		return 0;
-	}
-	unsigned GetBoolNum()
-	{
-		return IsBoolean() ? (current->u.boolean ? 1 : 0) : 0;
-	}
-	
+	TCHAR const *GetError();
+	TCHAR const *GetString();
+	int GetInteger();
+	TCHAR const *GetLong();
+	float GetFloat();
+	TCHAR const *GetDouble();
+	unsigned GetNumValues();
+	unsigned GetBoolNum();
 
 
 	short Handle();			//defined & documented in Extension.cpp
