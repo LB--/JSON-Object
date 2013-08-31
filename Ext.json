@@ -3,8 +3,8 @@
 	{
 		"Name": "JSON Object",
 		"Author": "LB",
-		"Copyright": "Copyright © 2013 LB",
-		"Comment": "Allows you to parse JSON files from strings, and in the future will allow you to modify and generate JSONs as strings.\n\nRequested by Rushino.",
+		"Copyright": "Copyright © 2013 LB-Stuff",
+		"Comment": "Allows you to parse JSON files from strings, and in the future will allow you to modify and generate JSONs as strings.\nRequested by Rushino.\nThanks to Phi and ConceptGame for helping with debugging.",
 		"URL": "http://www.LB-Stuff.com/",
 		"Help": "Help/JSON Object/Help.chm",
 		"Identifier": "JSON"
