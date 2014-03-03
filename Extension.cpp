@@ -30,6 +30,10 @@
  */
 Extension::Extension(RD *rd, SerializedED *SED, createObjectInfo *COB) : rd(rd), rh(rd->rHo.hoAdRunHeader), Runtime(rd)
 {
+	if(SDK->ActionFunctions.size() < 6)
+	{
+		MessageBox(NULL, _T("ActionFunctions vector too small!"), _T("JSON Object Debug"), MB_OK);
+	}
 	//Link all your action/condition/expression functions
 	//to their IDs to match the IDs in the JSON here.
 	LinkAction(0, LoadJSON);
@@ -37,6 +41,12 @@ Extension::Extension(RD *rd, SerializedED *SED, createObjectInfo *COB) : rd(rd),
 	LinkAction(2, EnterArray);
 	LinkAction(3, GoUp);
 	LinkAction(4, GotoRoot);
+
+	LinkAction(5, DebugWindow);
+	if(!SDK->ActionFunctions[5])
+	{
+		MessageBox(NULL, _T("Function not linked after linking!"), _T("JSON Object Debug"), MB_OK);
+	}
 
 	LinkCondition(0, OnError);
 	LinkCondition(1, IsString);
@@ -186,17 +196,38 @@ bool Extension::Load(HANDLE File)
  * to let you know that the ID is unlinked, or you
  * may just want to use unlinked A/C/Es as a feature.
  */
+#include <sstream>
 void Extension::Action(int ID, RD *rd, long param1, long param2)
 {
+#ifdef UNICODE
+	std::wostringstream oss;
+#else
+	std::ostringstream oss;
+#endif
+	oss << _T("Unlinked Action, ID = ") << ID << std::endl;
+	MessageBox(NULL, oss.str().c_str(), _T("JSON Object Debug"), MB_OK);
 }
 
 long Extension::Condition(int ID, RD *rd, long param1, long param2)
 {
+#ifdef UNICODE
+	std::wostringstream oss;
+#else
+	std::ostringstream oss;
+#endif
+	oss << _T("Unlinked Condition, ID = ") << ID << std::endl;
+	MessageBox(NULL, oss.str().c_str(), _T("JSON Object Debug"), MB_OK);
 	return false; //hopefully StringComparison (PARAM_CMPSTRING) is not used, or this may crash
 }
 
 long Extension::Expression(int ID, RD *rd, long param)
 {
+#ifdef UNICODE
+	std::wostringstream oss;
+#else
+	std::ostringstream oss;
+#endif
+	oss << _T("Unlinked Expression, ID = ") << ID << std::endl;
+	MessageBox(NULL, oss.str().c_str(), _T("JSON Object Debug"), MB_OK);
 	return long(_T("")); //so that unlinked expressions that return strings won't crash
 }
-

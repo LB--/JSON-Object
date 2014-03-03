@@ -3,7 +3,7 @@
 	{
 		"Name": "JSON Object",
 		"Author": "LB",
-		"Copyright": "Copyright © 2013 LB-Stuff",
+		"Copyright": "Copyright © 2014 LB-Stuff",
 		"Comment": "Allows you to parse JSON files from strings, and in the future will allow you to modify and generate JSONs as strings.\nRequested by Rushino.\nThanks to Phi and ConceptGame for helping with debugging.",
 		"URL": "http://www.LB-Stuff.com/",
 		"Help": "Help/JSON Object/Help.chm",
@@ -22,6 +22,7 @@
 			[4, "Go to Root"]
 		],
 		"Separator",
+		[5, "Debug Window"],
 		[0, "Modification", true],
 		"Separator"
 	],
@@ -60,7 +61,7 @@
 			"Parameters":
 			[
 				["String", "JSON (not a file path, the actual JSON)"],
-				["Integer", "Flags (0 for none): currently only one: 1=relaxed commas"]
+				["Integer", "Flags (0 for none): currently only one: 1=enable comments"]
 			]
 		},
 		{	"Title": "Enter Object named (%0)",
@@ -78,6 +79,8 @@
 		{	"Title": "Go Up to Parent"
 		},
 		{	"Title": "Go to Root"
+		},
+		{	"Title": "Debug Window"
 		}
 	],
 	"Conditions":

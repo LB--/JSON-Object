@@ -80,9 +80,10 @@ public:
 	std::string UTF8fromUnicode(std::wstring s)
 	{
 		int size = WideCharToMultiByte(CP_UTF8, 0, s.c_str(), -1, NULL, 0, NULL, NULL);
-		char *buf = new char[size];
+		char *buf = new char[size]();
 		if(!WideCharToMultiByte(CP_UTF8, 0, s.c_str(), -1, buf, size, NULL, NULL))
 		{
+			delete[] buf;
 			return "";
 		}
 		std::string t (buf);
@@ -99,6 +100,8 @@ public:
 	void EnterArray(unsigned index);
 	void GoUp();
 	void GotoRoot();
+
+	void DebugWindow();
 
 	//Conditions
 	bool OnError(); //0
