@@ -35,5 +35,17 @@ bool Extension::IsNull()
 }
 bool Extension::IsTrue()
 {
-	return IsBoolean() && current->u.boolean;
+	if(IsBoolean())
+	{
+		return current->u.boolean ? true : false;
+	}
+	else if(IsInteger())
+	{
+		return current->u.integer ? true : false;
+	}
+	else if(IsString())
+	{
+		return GetString() == std::basic_string<TCHAR>(_T("true"));
+	}
+	return false;
 }

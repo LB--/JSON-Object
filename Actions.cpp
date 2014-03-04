@@ -70,14 +70,9 @@ void Extension::GotoRoot()
 	current = root;
 }
 
-#include <sstream>
 void Extension::DebugWindow()
 {
-#ifdef UNICODE
-	std::wostringstream oss;
-#else
-	std::ostringstream oss;
-#endif
+	std::basic_ostringstream<TCHAR> oss;
 	oss << _T("IsString:  ") << std::boolalpha << IsString()  << std::endl;
 	oss << _T("IsInteger: ") << std::boolalpha << IsInteger() << std::endl;
 	oss << _T("IsDouble:  ") << std::boolalpha << IsDouble()  << std::endl;
