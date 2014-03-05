@@ -128,7 +128,7 @@
 			"Returns": "String"
 		},
 		{	"Title": "FloatValue(",
-			"Returns": "Integer"
+			"Returns": "Float"
 		},
 		{	"Title": "DoubleValue$(",
 			"Returns": "String"
