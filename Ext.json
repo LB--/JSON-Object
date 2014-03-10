@@ -18,19 +18,25 @@
 		["Navigaton",
 			[1, "Enter Object"],
 			[2, "Enter Array"],
+			"Separator",
 			[3, "Go Up to Parent"],
-			[4, "Go to Root"]
+			[4, "Go to Root"],
+			"Separator",
+			[6, "Set Bookmark here"],
+			[7, "Go to Bookmark"]
 		],
 		"Separator",
-		[5, "Debug Window"],
 		[0, "Modification", true],
+		"Separator",
+		[5, "Debug Window"],
 		"Separator"
 	],
 	"ConditionMenu":
 	[
 		"Separator",
 		[0, "On Error"],
-		["Current Value...",
+		"Separator",
+		["This object...",
 			[1, "Is String?"],
 			[2, "Is Integer?"],
 			[3, "Is Double?"],
@@ -39,19 +45,62 @@
 			[6, "Is Boolean?"],
 			[7, "Is Null?"],
 			[8, "Is True?"]
-		]
+		],
+		[9, "Subvalue Exists?"],
+		["Object subvalues...",
+			[10, "Is String?"],
+			[11, "Is Integer?"],
+			[12, "Is Double?"],
+			[13, "Is Object?"],
+			[14, "Is Array?"],
+			[15, "Is Boolean?"],
+			[16, "Is Null?"],
+			[17, "Is True?"]
+		],
+		["Array subvalues...",
+			[18, "Is String?"],
+			[19, "Is Integer?"],
+			[20, "Is Double?"],
+			[21, "Is Object?"],
+			[22, "Is Array?"],
+			[23, "Is Boolean?"],
+			[24, "Is Null?"],
+			[25, "Is True?"]
+		],
+		"Separator"
 	],
 	"ExpressionMenu":
 	[
 		"Separator",
 		[0, "Get Error"],
-		[1, "Get String"],
-		[2, "Get Integer"],
-		[3, "Get Long (64-bit as string)"],
-		[4, "Get Float"],
-		[5, "Get Double (64-bit as string)"],
-		[6, "Get Number of Values"],
-		[7, "Get Boolean (1|0)"],
+		"Separator",
+		["This object...",
+			[1, "Get String"],
+			[2, "Get Integer"],
+			[3, "Get Long (64-bit as string)"],
+			[4, "Get Float"],
+			[5, "Get Double (64-bit as string)"],
+			[6, "Get Number of Values"],
+			[7, "Get Boolean (1|0)"]
+		],
+		["Object subvalues...",
+			[8,  "Get String"],
+			[9,  "Get Integer"],
+			[10, "Get Long (64-bit as string)"],
+			[11, "Get Float"],
+			[12, "Get Double (64-bit as string)"],
+			[13, "Get Number of Values"],
+			[14, "Get Boolean (1|0)"]
+		],
+		["Array subvalues...",
+			[15, "Get String"],
+			[16, "Get Integer"],
+			[17, "Get Long (64-bit as string)"],
+			[18, "Get Float"],
+			[19, "Get Double (64-bit as string)"],
+			[20, "Get Number of Values"],
+			[21, "Get Boolean (1|0)"]
+		],
 		"Separator"
 	],
 
@@ -81,6 +130,18 @@
 		{	"Title": "Go to Root"
 		},
 		{	"Title": "Debug Window"
+		},
+		{	"Title": "Set Bookmark (%0) here",
+			"Parameters":
+			[
+				["String", "Name of Bookmark"]
+			]
+		},
+		{	"Title": "Go to Bookmark (%0)",
+			"Parameters":
+			[
+				["String", "Name of Bookmark"]
+			]
 		}
 	],
 	"Conditions":
@@ -111,6 +172,125 @@
 		},
 		{	"Title": "%o: Current Boolean is True?",
 			"Triggered": false
+		},
+		{	"Title": "%o: %0 exists?",
+			"Triggered": false,
+			"Parameters":
+			[
+				["String", "Name of Value within current Object"]
+			]
+		},
+		{	"Title": "%o: %0 is String?",
+			"Triggered": false,
+			"Parameters":
+			[
+				["String", "Name of Value within current Object"]
+			]
+		},
+		{	"Title": "%o: %0 is Integer?",
+			"Triggered": false,
+			"Parameters":
+			[
+				["String", "Name of Value within current Object"]
+			]
+		},
+		{	"Title": "%o: %0 is Double?",
+			"Triggered": false,
+			"Parameters":
+			[
+				["String", "Name of Value within current Object"]
+			]
+		},
+		{	"Title": "%o: %0 is Object?",
+			"Triggered": false,
+			"Parameters":
+			[
+				["String", "Name of Value within current Object"]
+			]
+		},
+		{	"Title": "%o: %0 is Array?",
+			"Triggered": false,
+			"Parameters":
+			[
+				["String", "Name of Value within current Object"]
+			]
+		},
+		{	"Title": "%o: %0 is Boolean?",
+			"Triggered": false,
+			"Parameters":
+			[
+				["String", "Name of Value within current Object"]
+			]
+		},
+		{	"Title": "%o: %0 is Null?",
+			"Triggered": false,
+			"Parameters":
+			[
+				["String", "Name of Value within current Object"]
+			]
+		},
+		{	"Title": "%o: %0 is True?",
+			"Triggered": false,
+			"Parameters":
+			[
+				["String", "Name of Value within current Object"]
+			]
+		},
+		{	"Title": "%o: Index %0 is String?",
+			"Triggered": false,
+			"Parameters":
+			[
+				["Integer", "Index of Value within current Array"]
+			]
+		},
+		{	"Title": "%o: Index %0 is Integer?",
+			"Triggered": false,
+			"Parameters":
+			[
+				["Integer", "Index of Value within current Array"]
+			]
+		},
+		{	"Title": "%o: Index %0 is Double?",
+			"Triggered": false,
+			"Parameters":
+			[
+				["Integer", "Index of Value within current Array"]
+			]
+		},
+		{	"Title": "%o: Index %0 is Object?",
+			"Triggered": false,
+			"Parameters":
+			[
+				["Integer", "Index of Value within current Array"]
+			]
+		},
+		{	"Title": "%o: Index %0 is Array?",
+			"Triggered": false,
+			"Parameters":
+			[
+				["Integer", "Index of Value within current Array"]
+			]
+		},
+		{	"Title": "%o: Index %0 is Boolean?",
+			"Triggered": false,
+			"Parameters":
+			[
+				["Integer", "Index of Value within current Array"]
+			]
+		},
+		{	"Title": "%o: Index %0 is Null?",
+			"Triggered": false,
+			"Parameters":
+			[
+				["Integer", "Index of Value within current Array"]
+			]
+		},
+		{	"Title": "%o: Index %0 is True?",
+			"Triggered": false,
+			"Parameters":
+			[
+				["Integer", "Index of Value within current Array"]
+			]
 		}
 	],
 	"Expressions":
@@ -138,6 +318,104 @@
 		},
 		{	"Title": "BooleanNum(",
 			"Returns": "Integer"
+		},
+		{	"Title": "ObjSubStringValue$(",
+			"Returns": "String",
+			"Parameters":
+			[
+				["String", "Subvalue Name"]
+			]
+		},
+		{	"Title": "ObjSubIntegerValue(",
+			"Returns": "Integer",
+			"Parameters":
+			[
+				["String", "Subvalue Name"]
+			]
+		},
+		{	"Title": "ObjSubLongValue$(",
+			"Returns": "String",
+			"Parameters":
+			[
+				["String", "Subvalue Name"]
+			]
+		},
+		{	"Title": "ObjSubFloatValue(",
+			"Returns": "Float",
+			"Parameters":
+			[
+				["String", "Subvalue Name"]
+			]
+		},
+		{	"Title": "ObjSubDoubleValue$(",
+			"Returns": "String",
+			"Parameters":
+			[
+				["String", "Subvalue Name"]
+			]
+		},
+		{	"Title": "ObjSubNumValues(",
+			"Returns": "Integer",
+			"Parameters":
+			[
+				["String", "Subvalue Name"]
+			]
+		},
+		{	"Title": "ObjSubBooleanNum(",
+			"Returns": "Integer",
+			"Parameters":
+			[
+				["String", "Subvalue Name"]
+			]
+		},
+		{	"Title": "ArrSubStringValue$(",
+			"Returns": "String",
+			"Parameters":
+			[
+				["Integer", "Subvalue Index"]
+			]
+		},
+		{	"Title": "ArrSubIntegerValue(",
+			"Returns": "Integer",
+			"Parameters":
+			[
+				["Integer", "Subvalue Index"]
+			]
+		},
+		{	"Title": "ArrSubLongValue$(",
+			"Returns": "String",
+			"Parameters":
+			[
+				["Integer", "Subvalue Index"]
+			]
+		},
+		{	"Title": "ArrSubFloatValue(",
+			"Returns": "Float",
+			"Parameters":
+			[
+				["Integer", "Subvalue Index"]
+			]
+		},
+		{	"Title": "ArrSubDoubleValue$(",
+			"Returns": "String",
+			"Parameters":
+			[
+				["Integer", "Subvalue Index"]
+			]
+		},
+		{	"Title": "ArrSubNumValues(",
+			"Returns": "Integer",
+			"Parameters":
+			[
+				["Integer", "Subvalue Index"]
+			]
+		},
+		{	"Title": "ArrSubBooleanNum(",
+			"Returns": "Integer",
+			"Parameters":
+			[
+				["Integer", "Subvalue Index"]
+			]
 		}
 	]
 }

@@ -1,6 +1,7 @@
 
 #include <sstream>
 #include <iomanip>
+#include <map>
 
 class Extension
 {
@@ -73,8 +74,9 @@ public:
 	~Extension();													//defined & documented in Extension.cpp
 
 	json_value *root;
-	json_value const*current;
+	json_value const *current;
 	stdtstring error;
+	std::map<stdtstring, json_value const *> bookmarks;
 
 #ifdef UNICODE
 	std::string UTF8fromUnicode(std::wstring s)
@@ -96,15 +98,40 @@ public:
 
 	//Actions
 	void LoadJSON(TCHAR const *JSON, int flags);
+
 	void EnterObject(TCHAR const *Name);
 	void EnterArray(unsigned index);
+
 	void GoUp();
 	void GotoRoot();
 
+	void SetBookmark(TCHAR const *Name);
+	void GotoBookmark(TCHAR const *Name);
+
 	void DebugWindow();
+
+	struct TempDelve
+	{
+		Extension &ext;
+		TempDelve(Extension &e, TCHAR const *Name)
+		: ext(e)
+		{
+			ext.EnterObject(Name);
+		}
+		TempDelve(Extension &e, unsigned index)
+		: ext(e)
+		{
+			ext.EnterArray(index);
+		}
+		~TempDelve()
+		{
+			ext.GoUp();
+		}
+	};
 
 	//Conditions
 	bool OnError(); //0
+
 	bool IsString();
 	bool IsInteger();
 	bool IsDouble();
@@ -114,8 +141,29 @@ public:
 	bool IsNull();
 	bool IsTrue();
 
+	bool ObjExists(TCHAR const *Name);
+
+	bool IsObjString(TCHAR const *Name);
+	bool IsObjInteger(TCHAR const *Name);
+	bool IsObjDouble(TCHAR const *Name);
+	bool IsObjObject(TCHAR const *Name);
+	bool IsObjArray(TCHAR const *Name);
+	bool IsObjBoolean(TCHAR const *Name);
+	bool IsObjNull(TCHAR const *Name);
+	bool IsObjTrue(TCHAR const *Name);
+
+	bool IsArrString(unsigned index);
+	bool IsArrInteger(unsigned index);
+	bool IsArrDouble(unsigned index);
+	bool IsArrObject(unsigned index);
+	bool IsArrArray(unsigned index);
+	bool IsArrBoolean(unsigned index);
+	bool IsArrNull(unsigned index);
+	bool IsArrTrue(unsigned index);
+
 	//Expressions
 	TCHAR const *GetError();
+
 	TCHAR const *GetString();
 	int GetInteger();
 	TCHAR const *GetLong();
@@ -123,6 +171,22 @@ public:
 	TCHAR const *GetDouble();
 	unsigned GetNumValues();
 	unsigned GetBoolNum();
+
+	TCHAR const *GetObjString(TCHAR const *Name);
+	int GetObjInteger(TCHAR const *Name);
+	TCHAR const *GetObjLong(TCHAR const *Name);
+	float GetObjFloat(TCHAR const *Name);
+	TCHAR const *GetObjDouble(TCHAR const *Name);
+	unsigned GetObjNumValues(TCHAR const *Name);
+	unsigned GetObjBoolNum(TCHAR const *Name);
+
+	TCHAR const *GetArrString(unsigned index);
+	int GetArrInteger(unsigned index);
+	TCHAR const *GetArrLong(unsigned index);
+	float GetArrFloat(unsigned index);
+	TCHAR const *GetArrDouble(unsigned index);
+	unsigned GetArrNumValues(unsigned index);
+	unsigned GetArrBoolNum(unsigned index);
 
 
 	short Handle();			//defined & documented in Extension.cpp

@@ -4,6 +4,7 @@ TCHAR const *Extension::GetError()
 {
 	return Runtime.CopyString(error.c_str());
 }
+
 TCHAR const *Extension::GetString()
 {
 	if(IsString())
@@ -163,6 +164,134 @@ unsigned Extension::GetBoolNum()
 	else if(IsString())
 	{
 		return GetString() == std::basic_string<TCHAR>(_T("true")) ? 1 : 0;
+	}
+	return 0;
+}
+
+TCHAR const *Extension::GetObjString(TCHAR const *Name)
+{
+	if(IsObject())
+	{
+		TempDelve td (*this, Name);
+		return GetString();
+	}
+	return _T("");
+}
+int Extension::GetObjInteger(TCHAR const *Name)
+{
+	if(IsObject())
+	{
+		TempDelve td (*this, Name);
+		return GetInteger();
+	}
+	return 0;
+}
+TCHAR const *Extension::GetObjLong(TCHAR const *Name)
+{
+	if(IsObject())
+	{
+		TempDelve td (*this, Name);
+		return GetLong();
+	}
+	return _T("0");
+}
+float Extension::GetObjFloat(TCHAR const *Name)
+{
+	if(IsObject())
+	{
+		TempDelve td (*this, Name);
+		return GetFloat();
+	}
+	return 0.0f;
+}
+TCHAR const *Extension::GetObjDouble(TCHAR const *Name)
+{
+	if(IsObject())
+	{
+		TempDelve td (*this, Name);
+		return GetDouble();
+	}
+	return _T("0.0");
+}
+unsigned Extension::GetObjNumValues(TCHAR const *Name)
+{
+	if(IsObject())
+	{
+		TempDelve td (*this, Name);
+		return GetNumValues();
+	}
+	return 0;
+}
+unsigned Extension::GetObjBoolNum(TCHAR const *Name)
+{
+	if(IsObject())
+	{
+		TempDelve td (*this, Name);
+		return GetBoolNum();
+	}
+	return 0;
+}
+
+TCHAR const *Extension::GetArrString(unsigned index)
+{
+	if(IsArray() && index < current->u.array.length)
+	{
+		TempDelve td (*this, index);
+		return GetString();
+	}
+	return _T("");
+}
+int Extension::GetArrInteger(unsigned index)
+{
+	if(IsArray() && index < current->u.array.length)
+	{
+		TempDelve td (*this, index);
+		return GetInteger();
+	}
+	return 0;
+}
+TCHAR const *Extension::GetArrLong(unsigned index)
+{
+	if(IsArray() && index < current->u.array.length)
+	{
+		TempDelve td (*this, index);
+		return GetLong();
+	}
+	return _T("0");
+}
+float Extension::GetArrFloat(unsigned index)
+{
+	if(IsArray() && index < current->u.array.length)
+	{
+		TempDelve td (*this, index);
+		return GetFloat();
+	}
+	return 0.0f;
+}
+TCHAR const *Extension::GetArrDouble(unsigned index)
+{
+	if(IsArray() && index < current->u.array.length)
+	{
+		TempDelve td (*this, index);
+		return GetDouble();
+	}
+	return _T("0.0");
+}
+unsigned Extension::GetArrNumValues(unsigned index)
+{
+	if(IsArray() && index < current->u.array.length)
+	{
+		TempDelve td (*this, index);
+		return GetNumValues();
+	}
+	return 0;
+}
+unsigned Extension::GetArrBoolNum(unsigned index)
+{
+	if(IsArray() && index < current->u.array.length)
+	{
+		TempDelve td (*this, index);
+		return GetBoolNum();
 	}
 	return 0;
 }

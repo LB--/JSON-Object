@@ -137,7 +137,7 @@ void *MMF2Func GetPropValue(mv *mV, SerializedED *SED, UINT PropID)
 	{
 	case Prop::Version:
 		{
-			return new CPropDataValue("Beta #1");
+			return new CPropDataValue("Beta #2");
 		}
 	//case Prop::MyString:
 	//	{

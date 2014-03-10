@@ -30,10 +30,6 @@
  */
 Extension::Extension(RD *rd, SerializedED *SED, createObjectInfo *COB) : rd(rd), rh(rd->rHo.hoAdRunHeader), Runtime(rd)
 {
-	if(SDK->ActionFunctions.size() < 6)
-	{
-		MessageBox(NULL, _T("ActionFunctions vector too small!"), _T("JSON Object Debug"), MB_OK);
-	}
 	//Link all your action/condition/expression functions
 	//to their IDs to match the IDs in the JSON here.
 	LinkAction(0, LoadJSON);
@@ -41,12 +37,9 @@ Extension::Extension(RD *rd, SerializedED *SED, createObjectInfo *COB) : rd(rd),
 	LinkAction(2, EnterArray);
 	LinkAction(3, GoUp);
 	LinkAction(4, GotoRoot);
-
 	LinkAction(5, DebugWindow);
-	if(!SDK->ActionFunctions[5])
-	{
-		MessageBox(NULL, _T("Function not linked after linking!"), _T("JSON Object Debug"), MB_OK);
-	}
+	LinkAction(6, SetBookmark);
+	LinkAction(7, GotoBookmark);
 
 	LinkCondition(0, OnError);
 	LinkCondition(1, IsString);
@@ -57,6 +50,23 @@ Extension::Extension(RD *rd, SerializedED *SED, createObjectInfo *COB) : rd(rd),
 	LinkCondition(6, IsBoolean);
 	LinkCondition(7, IsNull);
 	LinkCondition(8, IsTrue);
+	LinkCondition(9, ObjExists);
+	LinkCondition(10,IsObjString);
+	LinkCondition(11,IsObjInteger);
+	LinkCondition(12,IsObjDouble);
+	LinkCondition(13,IsObjObject);
+	LinkCondition(14,IsObjArray);
+	LinkCondition(15,IsObjBoolean);
+	LinkCondition(16,IsObjNull);
+	LinkCondition(17,IsObjTrue);
+	LinkCondition(18,IsArrString);
+	LinkCondition(19,IsArrInteger);
+	LinkCondition(20,IsArrDouble);
+	LinkCondition(21,IsArrObject);
+	LinkCondition(22,IsArrArray);
+	LinkCondition(23,IsArrBoolean);
+	LinkCondition(24,IsArrNull);
+	LinkCondition(25,IsArrTrue);
 
 	LinkExpression(0, GetError);
 	LinkExpression(1, GetString);
@@ -66,6 +76,20 @@ Extension::Extension(RD *rd, SerializedED *SED, createObjectInfo *COB) : rd(rd),
 	LinkExpression(5, GetDouble);
 	LinkExpression(6, GetNumValues);
 	LinkExpression(7, GetBoolNum);
+	LinkExpression(8, GetObjString);
+	LinkExpression(9, GetObjInteger);
+	LinkExpression(10,GetObjLong);
+	LinkExpression(11,GetObjFloat);
+	LinkExpression(12,GetObjDouble);
+	LinkExpression(13,GetObjNumValues);
+	LinkExpression(14,GetObjBoolNum);
+	LinkExpression(15,GetArrString);
+	LinkExpression(16,GetArrInteger);
+	LinkExpression(17,GetArrLong);
+	LinkExpression(18,GetArrFloat);
+	LinkExpression(19,GetArrDouble);
+	LinkExpression(20,GetArrNumValues);
+	LinkExpression(21,GetArrBoolNum);
 
 	current = root = json_parse("null", 4);
 }

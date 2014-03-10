@@ -34,17 +34,14 @@ void Extension::LoadJSON(TCHAR const *JSON, int flags)
 		json_value_free(root);
 	}
 	current = root = temp;
+	bookmarks.clear();
 }
 
 void Extension::EnterObject(TCHAR const *Name)
 {
-	if(IsObject())
+	if(IsObject() && ObjExists(Name))
 	{
-		json_value const*temp = &((*current)[UTF8fromUnicode(Name).c_str()]);
-		if(temp)
-		{
-			current = temp;
-		}
+		current = &((*current)[UTF8fromUnicode(Name).c_str()]);
 	}
 }
 
@@ -68,6 +65,18 @@ void Extension::GoUp()
 void Extension::GotoRoot()
 {
 	current = root;
+}
+
+void Extension::SetBookmark(TCHAR const *Name)
+{
+	bookmarks[Name] = current;
+}
+void Extension::GotoBookmark(TCHAR const *Name)
+{
+	if(bookmarks.find(Name) != bookmarks.end())
+	{
+		current = bookmarks[Name];
+	}
 }
 
 void Extension::DebugWindow()
