@@ -59,7 +59,6 @@ int MMF2Func MakeIconEx(mv *mV, cSurface *Icon, LPTSTR Name, OI *oi, SerializedE
 #ifndef RUN_ONLY
 	Icon->Delete();
 	Icon->Clone(*SDK->Icon);
-	Icon->SetTransparentColor(RGB(255, 0, 255));
 	return 0;
 #endif
 	return -1;

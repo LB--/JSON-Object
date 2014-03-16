@@ -33,6 +33,7 @@ namespace Prop
 	{
 		zNOT_USED = PROPID_EXTITEM_CUSTOM_FIRST,
 		Version,
+		GitHub,
 		//MyString,
 		//MyInt,
 	};
@@ -41,6 +42,7 @@ namespace Prop
 PropData Properties[] = //See the MMF2SDK help file for information on PropData_ macros.
 {
 	PropData_StaticString(Prop::Version, (UINT_PTR)"Version #", (UINT_PTR)"This is the current version of the JSON Object."),
+	PropData_URLButton(Prop::GitHub, (UINT_PTR)"GitHub Repo", (UINT_PTR)"The source code repository for this extension.", (UINT_PTR)"https://github.com/LB--/JSON-Object"),
 	//PropData_EditMultiLine(Prop::MyString, (UINT_PTR)"My String", (UINT_PTR)"The contents of my string."),
 	//PropData_EditNumber(Prop::MyInt, (UINT_PTR)"My Integer", (UINT_PTR)"The value of my integer."),
 	PropData_End()
@@ -137,7 +139,7 @@ void *MMF2Func GetPropValue(mv *mV, SerializedED *SED, UINT PropID)
 	{
 	case Prop::Version:
 		{
-			return new CPropDataValue("Beta #2");
+			return new CPropDataValue("Release v1.0.0");
 		}
 	//case Prop::MyString:
 	//	{
@@ -273,18 +275,15 @@ BOOL MMF2Func IsPropEnabled(mv *mV, SerializedED *SED, UINT PropID)
 {
 #ifndef RUN_ONLY
 	//EditData ed (SED);
-	switch(PropID)
-	{
-	case Prop::Version:
-		{
-			return FALSE; //Makes the version proeprty greyed out
-		}
+//	switch(PropID)
+//	{
 	//case Prop::MyString:	//intentional\\
 	//case Prop::MyInt:		//fallthrough\\
 	//	{
 	//		return TRUE; //allows the user to interact with these proeprties
 	//	}
-	}
+//	}
+	return TRUE;
 	//if you changed ed:
 	//ed.Serialize(mV, SED);
 #endif
