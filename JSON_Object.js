@@ -142,7 +142,7 @@ CRunJSON_Object.prototype = CServices.extend(new CRunExtension(),
 				catch(e)
 				{
 					this.error = ""+e;
-					this.generateEvent(CRunJSON_Object.CND_OnError, 0);
+					this.ho.generateEvent(CRunJSON_Object.CND_OnError, 0);
 				}
 			} break;
 			case CRunJSON_Object.ACT_EnterObject:
@@ -195,7 +195,7 @@ CRunJSON_Object.prototype = CServices.extend(new CRunExtension(),
 			} break;
 			case CRunJSON_Object.ACT_DebugWindow:
 			{
-				alert(root);
+				alert(JSON.stringify(this.root));
 			} break;
 		}
 	},
