@@ -252,18 +252,18 @@ CRunJSON_Object.prototype = CServices.extend(new CRunExtension(),
 			} break;
 			case CRunJSON_Object.CND_ObjExists:
 			{
-				var name = act.getParamExpString(this.rh, 0);
+				var name = cnd.getParamExpString(this.rh, 0);
 				return typeof this.current[name] !== 'undefined';
 			} break;
 			case CRunJSON_Object.CND_IsObjString:
 			{
-				var name = act.getParamExpString(this.rh, 0);
+				var name = cnd.getParamExpString(this.rh, 0);
 				return typeof this.current === 'object'
 				&&     typeof this.current[name] === 'string';
 			} break;
 			case CRunJSON_Object.CND_IsObjInteger:
 			{
-				var name = act.getParamExpString(this.rh, 0);
+				var name = cnd.getParamExpString(this.rh, 0);
 				if(typeof this.current === 'object'
 				&& typeof this.current[name] !== 'undefined')
 				{
@@ -273,7 +273,7 @@ CRunJSON_Object.prototype = CServices.extend(new CRunExtension(),
 			} break;
 			case CRunJSON_Object.CND_IsObjDouble:
 			{
-				var name = act.getParamExpString(this.rh, 0);
+				var name = cnd.getParamExpString(this.rh, 0);
 				if(typeof this.current === 'object'
 				&& typeof this.current[name] !== 'undefined')
 				{
@@ -283,43 +283,43 @@ CRunJSON_Object.prototype = CServices.extend(new CRunExtension(),
 			} break;
 			case CRunJSON_Object.CND_IsObjObject:
 			{
-				var name = act.getParamExpString(this.rh, 0);
+				var name = cnd.getParamExpString(this.rh, 0);
 				return typeof this.current === 'object'
 				&&     typeof this.current[name] === 'object';
 			} break;
 			case CRunJSON_Object.CND_IsObjArray:
 			{
-				var name = act.getParamExpString(this.rh, 0);
+				var name = cnd.getParamExpString(this.rh, 0);
 				return typeof this.current === 'object'
 				&&     Object.prototype.toString.call(this.current[name]) === '[object Array]';
 			} break;
 			case CRunJSON_Object.CND_IsObjBoolean:
 			{
-				var name = act.getParamExpString(this.rh, 0);
+				var name = cnd.getParamExpString(this.rh, 0);
 				return typeof this.current === 'object'
 				&&     (this.current[name] === true || this.current[name] === false);
 			} break;
 			case CRunJSON_Object.CND_IsObjNull:
 			{
-				var name = act.getParamExpString(this.rh, 0);
+				var name = cnd.getParamExpString(this.rh, 0);
 				return typeof this.current === 'object'
 				&&     this.current[name] === null;
 			} break;
 			case CRunJSON_Object.CND_IsObjTrue:
 			{
-				var name = act.getParamExpString(this.rh, 0);
+				var name = cnd.getParamExpString(this.rh, 0);
 				return typeof this.current === 'object'
 				&&     (this.current[name] === true || (this.current[name] === +this.current[name] && this.current[name] !== 0) || (typeof this.current[name] === 'string' && this.current[name] !== "false"));
 			} break;
 			case CRunJSON_Object.CND_IsArrString:
 			{
-				var index = act.getParamExpression(this.rh, 0);
+				var index = cnd.getParamExpression(this.rh, 0);
 				return Object.prototype.toString.call(this.current) === '[object Array]'
 				&&     typeof this.current[index] === 'string';
 			} break;
 			case CRunJSON_Object.CND_IsArrInteger:
 			{
-				var index = act.getParamExpression(this.rh, 0);
+				var index = cnd.getParamExpression(this.rh, 0);
 				if(Object.prototype.toString.call(this.current) === '[object Array]'
 				&& typeof this.current[index] !== 'undefined')
 				{
@@ -329,7 +329,7 @@ CRunJSON_Object.prototype = CServices.extend(new CRunExtension(),
 			} break;
 			case CRunJSON_Object.CND_IsArrDouble:
 			{
-				var index = act.getParamExpression(this.rh, 0);
+				var index = cnd.getParamExpression(this.rh, 0);
 				if(Object.prototype.toString.call(this.current) === '[object Array]'
 				&& typeof this.current[index] !== 'undefined')
 				{
@@ -339,31 +339,31 @@ CRunJSON_Object.prototype = CServices.extend(new CRunExtension(),
 			} break;
 			case CRunJSON_Object.CND_IsArrObject:
 			{
-				var index = act.getParamExpression(this.rh, 0);
+				var index = cnd.getParamExpression(this.rh, 0);
 				return Object.prototype.toString.call(this.current) === '[object Array]'
 				&&     typeof this.current[index] === 'object';
 			} break;
 			case CRunJSON_Object.CND_IsArrArray:
 			{
-				var index = act.getParamExpression(this.rh, 0);
+				var index = cnd.getParamExpression(this.rh, 0);
 				return Object.prototype.toString.call(this.current) === '[object Array]'
 				&&     Object.prototype.toString.call(this.current[index]) === '[object Array]';
 			} break;
 			case CRunJSON_Object.CND_IsArrBoolean:
 			{
-				var index = act.getParamExpression(this.rh, 0);
+				var index = cnd.getParamExpression(this.rh, 0);
 				return Object.prototype.toString.call(this.current) === '[object Array]'
 				&&     (this.current[index] === true || this.current[index] === false);
 			} break;
 			case CRunJSON_Object.CND_IsArrNull:
 			{
-				var index = act.getParamExpression(this.rh, 0);
+				var index = cnd.getParamExpression(this.rh, 0);
 				return Object.prototype.toString.call(this.current) === '[object Array]'
 				&&     this.current[index] === null;
 			} break;
 			case CRunJSON_Object.CND_IsArrTrue:
 			{
-				var index = act.getParamExpression(this.rh, 0);
+				var index = cnd.getParamExpression(this.rh, 0);
 				return Object.prototype.toString.call(this.current) === '[object Array]'
 				&&     (this.current[index] === true || (this.current[index] === +this.current[index] && this.current[index] !== 0) || (typeof this.current[index] === 'string' && this.current[index] !== "false"));
 			} break;
