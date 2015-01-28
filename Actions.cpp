@@ -35,6 +35,7 @@ void Extension::LoadJSON(TCHAR const *JSON, int flags)
 	}
 	current = root = temp;
 	bookmarks.clear();
+	loops.clear();
 }
 
 void Extension::EnterObject(TCHAR const *Name)
@@ -76,6 +77,47 @@ void Extension::GotoBookmark(TCHAR const *Name)
 	if(bookmarks.find(Name) != bookmarks.end())
 	{
 		current = bookmarks[Name];
+	}
+}
+
+void Extension::LoopObjects(TCHAR const *LoopName)
+{
+	json_value const *const looper = current;
+	loops.push_back(Loop(LoopName, looper));
+	if(IsObject())
+	{
+		std::size_t length = looper->u.object.length;
+		for(std::size_t i = 0; i < length; ++i)
+		{
+			if(loops.size() == 0 || loops.back().object != looper)
+			{
+				break;
+			}
+			loops.back().index = i;
+			loops.back().sub_name = std::string(looper->u.object.values[i].name, looper->u.object.values[i].name_length);
+			loops.back().sub = looper->u.object.values[i].value;
+			Runtime.GenerateEvent(26);
+		}
+	}
+	else if(IsArray())
+	{
+		std::size_t length = looper->u.array.length;
+		for(std::size_t i = 0; i < length; ++i)
+		{
+			if(loops.size() == 0 || loops.back().object != looper)
+			{
+				break;
+			}
+			loops.back().index = i;
+			loops.back().sub_name.clear();
+			loops.back().sub = looper->u.array.values[i];
+			Runtime.GenerateEvent(26);
+		}
+	}
+	if(loops.size() > 0 && loops.back().object == looper)
+	{
+		loops.pop_back();
+		current = looper;
 	}
 }
 

@@ -5,6 +5,15 @@ bool Extension::OnError()
 {
 	return true;
 }
+bool Extension::OnLoop(TCHAR const *LoopName)
+{
+	if(loops.size() > 0 && loops.back().name == LoopName)
+	{
+		current = loops.back().sub;
+		return true;
+	}
+	return false;
+}
 bool Extension::IsString()
 {
 	return current->type == json_string;

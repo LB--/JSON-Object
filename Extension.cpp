@@ -40,6 +40,7 @@ Extension::Extension(RD *rd, SerializedED *SED, createObjectInfo *COB) : rd(rd),
 	LinkAction(5, DebugWindow);
 	LinkAction(6, SetBookmark);
 	LinkAction(7, GotoBookmark);
+	LinkAction(8, LoopObjects);
 
 	LinkCondition(0, OnError);
 	LinkCondition(1, IsString);
@@ -67,6 +68,7 @@ Extension::Extension(RD *rd, SerializedED *SED, createObjectInfo *COB) : rd(rd),
 	LinkCondition(23,IsArrBoolean);
 	LinkCondition(24,IsArrNull);
 	LinkCondition(25,IsArrTrue);
+	LinkCondition(26,OnLoop);
 
 	LinkExpression(0, GetError);
 	LinkExpression(1, GetString);
@@ -90,6 +92,8 @@ Extension::Extension(RD *rd, SerializedED *SED, createObjectInfo *COB) : rd(rd),
 	LinkExpression(19,GetArrDouble);
 	LinkExpression(20,GetArrNumValues);
 	LinkExpression(21,GetArrBoolNum);
+	LinkExpression(22,GetIteratedName);
+	LinkExpression(23,GetIteratedIndex);
 
 	current = root = json_parse("null", 4);
 }

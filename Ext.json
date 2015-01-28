@@ -25,6 +25,7 @@
 			[6, "Set Bookmark here"],
 			[7, "Go to Bookmark"]
 		],
+		[8, "Loop through all sub-objects"],
 		"Separator",
 		[0, "Modification", true],
 		"Separator",
@@ -35,6 +36,8 @@
 	[
 		"Separator",
 		[0, "On Error"],
+		"Separator",
+		[26, "On Loop"],
 		"Separator",
 		["This object...",
 			[1, "Is String?"],
@@ -73,6 +76,9 @@
 	[
 		"Separator",
 		[0, "Get Error"],
+		"Separator",
+		[22, "Get Name of Looped Sub-Object"],
+		[23, "Get Index of Looped Sub-Object"],
 		"Separator",
 		["This object...",
 			[1, "Get String"],
@@ -141,6 +147,12 @@
 			"Parameters":
 			[
 				["String", "Name of Bookmark"]
+			]
+		},
+		{	"Title": "Loop (%0) through all sub-objects",
+			"Parameters":
+			[
+				["String", "Name of Loop"]
 			]
 		}
 	],
@@ -291,6 +303,13 @@
 			[
 				["Integer", "Index of Value within current Array"]
 			]
+		},
+		{	"Title": "%o: On Sub-Object Loop %0",
+			"Triggered": true,
+			"Parameters":
+			[
+				["String", "Name of Loop"]
+			]
 		}
 	],
 	"Expressions":
@@ -416,6 +435,12 @@
 			[
 				["Integer", "Subvalue Index"]
 			]
+		},
+		{	"Title": "LoopedName$(",
+			"Returns": "String"
+		},
+		{	"Title": "LoopedIndex(",
+			"Returns": "Integer"
 		}
 	]
 }

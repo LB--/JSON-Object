@@ -2,6 +2,7 @@
 #include <sstream>
 #include <iomanip>
 #include <map>
+#include <vector>
 
 class Extension
 {
@@ -77,6 +78,40 @@ public:
 	json_value const *current;
 	stdtstring error;
 	std::map<stdtstring, json_value const *> bookmarks;
+	struct Loop
+	{
+		stdtstring name;
+		json_value const *object;
+		std::string sub_name;
+		std::size_t index;
+		json_value const *sub;
+
+		Loop(stdtstring const &id, json_value const *obj)
+		: name(id)
+		, object(obj)
+		, index()
+		, sub()
+		{
+		}
+		Loop(Loop const &from)
+		: name(from.name)
+		, object(from.object)
+		, sub_name(from.sub_name)
+		, index(from.index)
+		, sub(from.sub)
+		{
+		}
+		Loop &operator=(Loop const &from)
+		{
+			name = from.name;
+			object = from.object;
+			sub_name = from.sub_name;
+			index = from.index;
+			sub = from.sub;
+			return *this;
+		}
+	};
+	std::vector<Loop> loops;
 
 #ifdef UNICODE
 	std::string UTF8fromUnicode(std::wstring s)
@@ -108,6 +143,8 @@ public:
 	void SetBookmark(TCHAR const *Name);
 	void GotoBookmark(TCHAR const *Name);
 
+	void LoopObjects(TCHAR const *LoopName);
+
 	void DebugWindow();
 
 	struct TempDelve
@@ -131,6 +168,7 @@ public:
 
 	//Conditions
 	bool OnError(); //0
+	bool OnLoop(TCHAR const *LoopName); //26
 
 	bool IsString();
 	bool IsInteger();
@@ -163,6 +201,8 @@ public:
 
 	//Expressions
 	TCHAR const *GetError();
+	TCHAR const *GetIteratedName();
+	int GetIteratedIndex();
 
 	TCHAR const *GetString();
 	int GetInteger();

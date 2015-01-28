@@ -4,6 +4,25 @@ TCHAR const *Extension::GetError()
 {
 	return Runtime.CopyString(error.c_str());
 }
+TCHAR const *Extension::GetIteratedName()
+{
+	if(loops.size() > 0)
+	{
+		TCHAR *t = Edif::ConvertString(loops.back().sub_name.c_str());
+		TCHAR *c = Runtime.CopyString(t);
+		Edif::FreeString(t);
+		return c;
+	}
+	return _T("");
+}
+int Extension::GetIteratedIndex()
+{
+	if(loops.size() > 0)
+	{
+		return loops.back().index;
+	}
+	return 0;
+}
 
 TCHAR const *Extension::GetString()
 {
