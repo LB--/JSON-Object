@@ -50,7 +50,7 @@ void Extension::EnterArray(unsigned index)
 {
 	if(IsArray())
 	{
-		json_value const*temp = &((*current)[index]);
+		json_value const *temp = &((*current)[index]);
 		if(temp)
 		{
 			current = temp;
