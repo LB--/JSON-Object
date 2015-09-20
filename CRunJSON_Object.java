@@ -37,9 +37,6 @@ public class CRunJSON_Object extends CRunExtension
 
 	private Object root = null;
 	private Object current = null;
-	{
-		LoadJSON("null", 0);
-	}
 	private Stack<Object> parents = new Stack<Object>();
 	private Throwable error = null;
 	private Map<String, Stack<Object>> bookmarks = new HashMap<String, Stack<Object>>();
@@ -61,6 +58,10 @@ public class CRunJSON_Object extends CRunExtension
 		}
 	}
 	private Stack<Loop> loops = new Stack<Loop>();
+
+	{
+		LoadJSON("null", 0);
+	}
 
 	/* Actions **********************************************************/
 	public void LoadJSON(String json, int flags_unused)
