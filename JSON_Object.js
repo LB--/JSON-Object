@@ -163,7 +163,7 @@ CRunJSON_Object.prototype = CServices.extend(new CRunExtension(),
 				&& (Object.prototype.toString.call(this.current) === '[object Array]')
 				&& (typeof this.current[index] !== 'undefined'))
 				{
-					this.parents.push(current);
+					this.parents.push(this.current);
 					this.current = this.current[index];
 				}
 			} break;
@@ -410,7 +410,7 @@ CRunJSON_Object.prototype = CServices.extend(new CRunExtension(),
 			} break;
 			case CRunJSON_Object.EXP_GetNumValues:
 			{
-				return Object.prototype.toString.call(this.current) === '[object Array]'? this.current.length : Object.keys(current).length;
+				return Object.prototype.toString.call(this.current) === '[object Array]'? this.current.length : Object.keys(this.current).length;
 			} break;
 			case CRunJSON_Object.EXP_GetBoolNum:
 			{
@@ -444,7 +444,7 @@ CRunJSON_Object.prototype = CServices.extend(new CRunExtension(),
 			case CRunJSON_Object.EXP_GetObjNumValues:
 			{
 				var name = this.ho.getExpParam();
-				return typeof this.current === 'object'? (Object.prototype.toString.call(this.current[name]) === '[object Array]'? this.current[name].length : Object.keys(current[name]).length) : 0;
+				return typeof this.current === 'object'? (Object.prototype.toString.call(this.current[name]) === '[object Array]'? this.current[name].length : Object.keys(this.current[name]).length) : 0;
 			} break;
 			case CRunJSON_Object.EXP_GetObjBoolNum:
 			{
@@ -487,7 +487,7 @@ CRunJSON_Object.prototype = CServices.extend(new CRunExtension(),
 			case CRunJSON_Object.EXP_GetArrNumValues:
 			{
 				var index = this.ho.getExpParam();
-				return Object.prototype.toString.call(this.current) === '[object Array]'? (Object.prototype.toString.call(this.current[index]) === '[object Array]'? this.current[index].length : Object.keys(current[index]).length) : 0;
+				return Object.prototype.toString.call(this.current) === '[object Array]'? (Object.prototype.toString.call(this.current[index]) === '[object Array]'? this.current[index].length : Object.keys(this.current[index]).length) : 0;
 			} break;
 			case CRunJSON_Object.EXP_GetArrBoolNum:
 			{
