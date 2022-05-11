@@ -187,7 +187,9 @@ public class CRunJSON_Object extends CRunExtension
 		finally
 		{
 			if(loops.size() > 0 && loops.peek().object == looperobj)
-			loops.pop();
+			{
+				loops.pop();
+			}
 			current = looperobj;
 			parents = looperparents;
 		}
@@ -229,7 +231,7 @@ public class CRunJSON_Object extends CRunExtension
 	}
 	public boolean IsInteger()
 	{
-		return current instanceof Long;
+		return current instanceof Integer || current instanceof Long;
 	}
 	public boolean IsDouble()
 	{
@@ -257,7 +259,11 @@ public class CRunJSON_Object extends CRunExtension
 		{
 			return (Boolean)current;
 		}
-		else if(IsInteger())
+		else if(current instanceof Integer)
+		{
+			return (Integer)current != 0;
+		}
+		else if(current instanceof Long)
 		{
 			return (Long)current != 0;
 		}
@@ -495,7 +501,11 @@ public class CRunJSON_Object extends CRunExtension
 	}
 	public int GetInteger()
 	{
-		if(IsInteger())
+		if(current instanceof Integer)
+		{
+			return (int)(Integer)current;
+		}
+		else if(current instanceof Long)
 		{
 			return (int)(long)(Long)current;
 		}
@@ -537,7 +547,11 @@ public class CRunJSON_Object extends CRunExtension
 		{
 			return (float)(double)(Double)current;
 		}
-		else if(IsInteger())
+		else if(current instanceof Integer)
+		{
+			return (float)(int)(Integer)current;
+		}
+		else if(current instanceof Long)
 		{
 			return (float)(long)(Long)current;
 		}
@@ -556,7 +570,11 @@ public class CRunJSON_Object extends CRunExtension
 		{
 			return current.toString();
 		}
-		else if(IsInteger())
+		else if(current instanceof Integer)
+		{
+			return "" + (double)(int)(Integer)current;
+		}
+		else if(current instanceof Long)
 		{
 			return "" + (double)(long)(Long)current;
 		}
@@ -587,19 +605,23 @@ public class CRunJSON_Object extends CRunExtension
 		{
 			return (Boolean)current? 1 : 0;
 		}
-		else if(IsInteger())
+		else if(current instanceof Integer)
 		{
-			return ((Long)current != 0)? 1 : 0;
+			return ((int)(Integer)current != 0)? 1 : 0;
+		}
+		else if(current instanceof Long)
+		{
+			return ((long)(Long)current != 0)? 1 : 0;
 		}
 		else if(IsString())
 		{
-			return (current.toString().equals("true"))? 1 : 0;
+			return (current.toString().equalsIgnoreCase("true"))? 1 : 0;
 		}
 		return 0;
 	}
 	public String GetObjString(String name)
 	{
-		if(IsObject()) try
+		if(IsObject() && ObjExists(name)) try
 		{
 			EnterObject(name);
 			return GetString();
@@ -612,7 +634,7 @@ public class CRunJSON_Object extends CRunExtension
 	}
 	public int GetObjInteger(String name)
 	{
-		if(IsObject()) try
+		if(IsObject() && ObjExists(name)) try
 		{
 			EnterObject(name);
 			return GetInteger();
@@ -625,7 +647,7 @@ public class CRunJSON_Object extends CRunExtension
 	}
 	public String GetObjLong(String name)
 	{
-		if(IsObject()) try
+		if(IsObject() && ObjExists(name)) try
 		{
 			EnterObject(name);
 			return GetLong();
@@ -638,7 +660,7 @@ public class CRunJSON_Object extends CRunExtension
 	}
 	public float GetObjFloat(String name)
 	{
-		if(IsObject()) try
+		if(IsObject() && ObjExists(name)) try
 		{
 			EnterObject(name);
 			return GetFloat();
@@ -651,7 +673,7 @@ public class CRunJSON_Object extends CRunExtension
 	}
 	public String GetObjDouble(String name)
 	{
-		if(IsObject()) try
+		if(IsObject() && ObjExists(name)) try
 		{
 			EnterObject(name);
 			return GetDouble();
@@ -664,7 +686,7 @@ public class CRunJSON_Object extends CRunExtension
 	}
 	public int GetObjNumValues(String name)
 	{
-		if(IsObject()) try
+		if(IsObject() && ObjExists(name)) try
 		{
 			EnterObject(name);
 			return GetNumValues();
@@ -677,7 +699,7 @@ public class CRunJSON_Object extends CRunExtension
 	}
 	public int GetObjBoolNum(String name)
 	{
-		if(IsObject()) try
+		if(IsObject() && ObjExists(name)) try
 		{
 			EnterObject(name);
 			return GetBoolNum();
@@ -690,7 +712,7 @@ public class CRunJSON_Object extends CRunExtension
 	}
 	public String GetArrString(int index)
 	{
-		if(IsArray()) try
+		if(IsArray() && index < GetNumValues()) try
 		{
 			EnterArray(index);
 			return GetString();
@@ -703,7 +725,7 @@ public class CRunJSON_Object extends CRunExtension
 	}
 	public int GetArrInteger(int index)
 	{
-		if(IsArray()) try
+		if(IsArray() && index < GetNumValues()) try
 		{
 			EnterArray(index);
 			return GetInteger();
@@ -716,7 +738,7 @@ public class CRunJSON_Object extends CRunExtension
 	}
 	public String GetArrLong(int index)
 	{
-		if(IsArray()) try
+		if(IsArray() && index < GetNumValues()) try
 		{
 			EnterArray(index);
 			return GetLong();
@@ -729,7 +751,7 @@ public class CRunJSON_Object extends CRunExtension
 	}
 	public float GetArrFloat(int index)
 	{
-		if(IsArray()) try
+		if(IsArray() && index < GetNumValues()) try
 		{
 			EnterArray(index);
 			return GetFloat();
@@ -742,7 +764,7 @@ public class CRunJSON_Object extends CRunExtension
 	}
 	public String GetArrDouble(int index)
 	{
-		if(IsArray()) try
+		if(IsArray() && index < GetNumValues()) try
 		{
 			EnterArray(index);
 			return GetDouble();
@@ -755,7 +777,7 @@ public class CRunJSON_Object extends CRunExtension
 	}
 	public int GetArrNumValues(int index)
 	{
-		if(IsArray()) try
+		if(IsArray() && index < GetNumValues()) try
 		{
 			EnterArray(index);
 			return GetNumValues();
@@ -768,7 +790,7 @@ public class CRunJSON_Object extends CRunExtension
 	}
 	public int GetArrBoolNum(int index)
 	{
-		if(IsArray()) try
+		if(IsArray() && index < GetNumValues()) try
 		{
 			EnterArray(index);
 			return GetBoolNum();
