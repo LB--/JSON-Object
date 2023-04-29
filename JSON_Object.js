@@ -182,7 +182,7 @@ CRunJSON_Object.prototype = CServices.extend(new CRunExtension(),
 			case CRunJSON_Object.ACT_SetBookmark:
 			{
 				var name = act.getParamExpString(this.rh, 0);
-				this.bookmarks[name] = {v: this.current, p: this.parents.clone()};
+				this.bookmarks[name] = {v: this.current, p: this.parents.slice()};
 			} break;
 			case CRunJSON_Object.ACT_GotoBookmark:
 			{
@@ -190,7 +190,7 @@ CRunJSON_Object.prototype = CServices.extend(new CRunExtension(),
 				if(typeof this.bookmarks[name] !== 'undefined')
 				{
 					this.current = this.bookmarks[name].v;
-					this.parents = this.bookmarks[name].p.clone();
+					this.parents = this.bookmarks[name].p.slice();
 				}
 			} break;
 			case CRunJSON_Object.ACT_DebugWindow:
