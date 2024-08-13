@@ -11,6 +11,7 @@ CRunJSON_Object.ACT_GotoRoot = 4;
 CRunJSON_Object.ACT_DebugWindow = 5;
 CRunJSON_Object.ACT_SetBookmark = 6;
 CRunJSON_Object.ACT_GotoBookmark = 7;
+CRunJSON_Object.ACT_LoopObjects = 8;
 
 CRunJSON_Object.CND_OnError = 0;
 CRunJSON_Object.CND_IsString = 1;
@@ -38,9 +39,10 @@ CRunJSON_Object.CND_IsArrArray = 22;
 CRunJSON_Object.CND_IsArrBoolean = 23;
 CRunJSON_Object.CND_IsArrNull = 24;
 CRunJSON_Object.CND_IsArrTrue = 25;
+CRunJSON_Object.CND_OnLoop = 26;
 // Important. CND_LAST must contain the number of conditions.
 // Do not forget to update it if you add or remove a condition from the list.
-CRunJSON_Object.CND_LAST = 26;
+CRunJSON_Object.CND_LAST = 27;
 
 CRunJSON_Object.EXP_GetError = 0;
 CRunJSON_Object.EXP_GetString = 1;
@@ -64,6 +66,8 @@ CRunJSON_Object.EXP_GetArrFloat = 18;
 CRunJSON_Object.EXP_GetArrDouble = 19;
 CRunJSON_Object.EXP_GetArrNumValues = 20;
 CRunJSON_Object.EXP_GetArrBoolNum = 21;
+CRunJSON_Object.EXP_GetIteratedName = 22;
+CRunJSON_Object.EXP_GetIteratedIndex = 23;
 
 // Constructor of the object.
 // ----------------------------------------------------------------
@@ -196,6 +200,39 @@ CRunJSON_Object.prototype = CServices.extend(new CRunExtension(),
 			case CRunJSON_Object.ACT_DebugWindow:
 			{
 				alert(JSON.stringify(this.root));
+			} break;
+			case CRunJSON_Object.ACT_LoopObjects:
+			{
+				const name = act.getParamExpString(this.rh, 0);
+				const original = {
+					root: this.root,
+					current: this.current,
+					parents: this.parents.slice(),
+				};
+				if(typeof original.current === 'object'){
+					for(const [index, [key, value]] of Object.entries(Object.entries(original.current))){
+						if(original.root !== this.root){
+							break;
+						}
+						this.ho.generateEvent(CRunJSON_Object.CND_OnLoop, {original: original, loop: name, index: index, key: key, value: value});
+					}
+				}
+				else if(Object.prototype.toString.call(this.current) === '[object Array]'){
+					for(const [index, value] of Object.entries(original.current)){
+						if(original.root !== this.root){
+							break;
+						}
+						this.ho.generateEvent(CRunJSON_Object.CND_OnLoop, {original: original, loop: name, index: index, value: value});
+					}
+				}
+				if(original.root === this.root){
+					this.current = original.current;
+					this.parents = original.parents;
+				}
+			} break;
+			default:
+			{
+				alert('JSON_Object: unsupported action ' + num);
 			} break;
 		}
 	},
@@ -367,6 +404,21 @@ CRunJSON_Object.prototype = CServices.extend(new CRunExtension(),
 				return Object.prototype.toString.call(this.current) === '[object Array]'
 				&&     (this.current[index] === true || (this.current[index] === +this.current[index] && this.current[index] !== 0) || (typeof this.current[index] === 'string' && this.current[index] !== "false"));
 			} break;
+			case CRunJSON_Object.CND_OnLoop:
+			{
+				const name = cnd.getParamExpString(this.rh, 0);
+				const param = this.ho.getEventParam();
+				if(param.original.root === this.root && param.loop === name){
+					this.parents = param.original.parents.slice();
+					this.parents.push(param.original.current);
+					this.current = param.value;
+					return true;
+				}
+			} break;
+			default:
+			{
+				alert('JSON_Object: unsupported condition ' + num);
+			} break;
 		}
 		return false;
 	},
@@ -501,6 +553,26 @@ CRunJSON_Object.prototype = CServices.extend(new CRunExtension(),
 					return result;
 				}
 				return 0;
+			} break;
+			case CRunJSON_Object.EXP_GetIteratedName:
+			{
+				const param = this.ho.getEventParam();
+				if(typeof param.key !== 'undefined'){
+					return param.key;
+				}
+				return '';
+			} break;
+			case CRunJSON_Object.EXP_GetIteratedIndex:
+			{
+				const param = this.ho.getEventParam();
+				if(typeof param.index !== 'undefined'){
+					return param.index;
+				}
+				return '';
+			} break;
+			default:
+			{
+				alert('JSON_Object: unsupported expression ' + num);
 			} break;
 		}
 		return 0;
